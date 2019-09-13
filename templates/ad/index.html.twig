@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les annonces{% endblock %}
+
+{% block body %}
+
+    <main class="container">
+        <h1 class="mt-5 mb-3">{{ controller_name }}</h1>
+        <div class="row">
+            {% for ad in ads %}
+                {% include 'ad/_ad.html.twig' %}
+            {% endfor %}
+        </div>
+    </main>
+
+{% endblock %}
+
