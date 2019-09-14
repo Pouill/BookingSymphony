@@ -9,6 +9,10 @@
                             <h4 class="card-title">{{ad.title}}</h4>
                             <p class="card-text">{{ad.introduction}}</p>
                             <a href="{{url}}" class="btn btn-outline-secondary">+ d'infos</a>
+                            {% if app.user and app.user == ad.author %}
+                                <a href="{{path('ads_edit',{'slug':ad.slug})}}" class="btn btn-outline-warning">Modifier</a>
+                                <a href="{{path('ads_delete',{'slug':ad.slug})}}" class="btn btn-outline-danger" onclick="return confirm(`Etes vous sûr de vouloir supprimer cette annonce ?`)">Supprimer</a>
+                            {% endif %}
                         </div>
                         <div class="card-footer text-muted">
                             <span>Pas encore noté</span>
