@@ -15,7 +15,7 @@
                 <p>votre Réservation auprès de 
                     <a href="{{path('user_show',{'slug':booking.ad.author.slug})}}">{{booking.ad.author.fullname}}</a> 
                     pour l'annonce 
-                    <a href="{{path('user_show',{'slug':booking.ad.slug})}}">{{booking.ad.title}}</a>
+                    <a href="{{path('ads_single',{'slug':booking.ad.slug})}}">{{booking.ad.title}}</a>
                     à bien été enregistré.
                 </p>
             </div>
@@ -40,7 +40,7 @@
                         <dt class="col-md-4">Montant total :</dt>
                         <dd class="col-md-8">{{booking.amount}}</dd>
                         <dt class="col-md-4">Commentaire :</dt>
-                        <dd class="col-md-8">{{booking.comment}}</dd>
+                        <dd class="col-md-8">{{booking.comment | default('Aucun commentaire')}}</dd>
                     </dl>
                     <h3 class="alert-heading">Propriétaire du bien</h3>
                     <div class="row">
@@ -56,6 +56,24 @@
                                 {{booking.ad.author.description | raw}}
                             </div>
                         </div>
+                    </div>
+                    <div class="alert alert-light" id="comment">
+                        <h3 class="alert-heading">Votre avis nous interesse !</h3>
+                        {% if date() > date(booking.endDate) %}
+                            {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                            {% if comment is not null %}
+                                <blockquote>{{comment.content}}</blockquote>
+                                <strong>Note : </strong> {% include 'inc/rating.html.twig' with {'rating':comment.rating } %}
+                            {% else %}
+                                {{form_start(form)}}
+                                {{form_widget(form)}}
+                                <button type="submit" class="btn btn-outline-primary">Envoyer</button>
+                                {{form_end(form)}}
+                            {% endif %}
+                        {% else %}
+                            <p class="alert alert-warning">Vous ne pourrez noter cette annonce tant que votre séjour n'est pas terminé. <br>
+                            Revenez après votre séjour.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -14,8 +14,12 @@
                                 <a href="{{path('ads_delete',{'slug':ad.slug})}}" class="btn btn-outline-danger" onclick="return confirm(`Etes vous sûr de vouloir supprimer cette annonce ?`)">Supprimer</a>
                             {% endif %}
                         </div>
-                        <div class="card-footer text-muted">
-                            <span>Pas encore noté</span>
+                        <div class="card-footer text-muted text-center">
+                            {% if ad.comments | length > 0 %}
+                                {% include 'inc/rating.html.twig' with {'rating' : ad.averageRatings} %} sur {{ ad.comments | length}} avis.
+                            {% else %}
+                                <span>Pas encore de commentraire.</span>
+                            {% endif %}
                         </div>
                 </div>
             </div>

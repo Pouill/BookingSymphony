@@ -48,9 +48,38 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Suivant</span>
                     </a>
-                </div>
-            </div>
+                </div>            
 
+                <hr>
+
+                {% if ad.comments | length > 0 %}
+                    <h3>Commentaires des voyageurs</h3>
+                    <div class="alert alert-info">
+                        <h4 class="alert-heading h6">
+                            <div class="row align-items-center">
+                                <div class="col-md-7">
+                                    Note glodale donnée par les voyageurs : 
+                                </div>
+                                <div class="col-5">
+                                    {% include 'inc/rating.html.twig' with {'rating' : ad.averageRatings} %} <br>    
+                                    <small>Moyenne est calculé sur {{ad.comments | length }} avis.</small>
+                                </div>
+                            </div>
+                        </h4>
+                    </div>
+                    {% for comment in ad.comments %}
+                        <div class="bg-light-rounded">
+                            <p><strong>{{comment.author.fullname}}</strong> a dit : </p>
+                            <blockquote>{{comment.content}}</blockquote>
+                            <p>Note donnée : 
+                                {% include 'inc/rating.html.twig' with {'rating' : comment.rating} %}
+                            </p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h3>Cette annonce n'a pas de commentaire.</h3>
+                {% endif %}
+            </div>
             <div class="col">
                 {% set a = ad.author %}
                 <div class="row">
@@ -69,7 +98,7 @@
                 <div class="col py-3">
                     {{ a.introduction | raw}}
                 </div>
-
+                
             </div>
         </div>
     </div>
