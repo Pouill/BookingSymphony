@@ -76,6 +76,11 @@ class Pagination{
     // 4- On va chercher le nomùbre de pages au total
 
     public function getData(){
+
+        if(empty($this->entityClass)){
+            throw new \Exception("setEntityClass n'a pas été renseigné dasn le controller correspondant");
+        }
+        
         // Calculer l'offset
 
             $offset = $this->currentPage * $this->limit - $this->limit;
