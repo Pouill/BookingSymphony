@@ -8,7 +8,7 @@
         <h1 class="my-3 p-3">Gestion des commentaires</h1>
         <div class="row mx-3">
             <table class="table">
-                <thead class="table-dark">>
+                <thead class="table-dark">
                     <th>Id</th>
                     <th>Date</th>
                     <th>Auteur</th>
@@ -19,7 +19,7 @@
                     <th></th>
                 </thead>
                 <tbody>
-                    {% for comment in comments %}
+                    {% for comment in pagination.data %}
                         <tr>
                             <td>{{comment.id}}</td>
                             <td>{{comment.createdAt|date('d/m/Y H:i')}}</td>
@@ -41,6 +41,7 @@
                 </tbody>
             </table>
         </div>
+        {{ pagination.display() }}
     </main>
 
 {% endblock %}
